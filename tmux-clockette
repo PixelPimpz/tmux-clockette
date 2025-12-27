@@ -5,4 +5,5 @@ PLUG_ROOT="$(tmux display -p "#{@PLUG_ROOT}")"
 tmux display -p "clockette"
 
 $PLUG_ROOT/scripts/tmux-clockette.sh
+tmux bind -u M-c 
 tmux bind M-c run "$PLUG_ROOT/scripts/tmux-clockette.sh
