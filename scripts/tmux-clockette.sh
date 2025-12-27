@@ -11,7 +11,7 @@ main() {
 }
 
 interval() {
-  local now="$(time +%l %M %S)"
+  local now="$(date +%l %M %S)"
   tmux display -p ">> ${now}"  
 }
 
