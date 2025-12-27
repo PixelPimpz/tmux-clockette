@@ -4,4 +4,7 @@ getIcon() {
   eval $(tmux display -p "#{@GET_ICON}") $1
 }
 ((DEBUG == 1)) && tmux display -p "tmux-clockette.sh running..."
-getIcon "alert"
+hours=("one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve")
+nowh=(( $(time +%H)%12 ))
+nowH=$hours[$now-h]
+getIcon "$nowH"
