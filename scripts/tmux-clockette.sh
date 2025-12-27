@@ -5,6 +5,6 @@ getIcon() {
 }
 ((DEBUG == 1)) && tmux display -p "tmux-clockette.sh running..."
 hours=("one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve")
-nowh=(( $(time +%H)%12 ))
+nowh=$(( $(time +%H)%12 ))
 nowH=$hours[$now-h]
 tmux display -p "time: $nowh"
