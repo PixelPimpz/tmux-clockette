@@ -11,8 +11,8 @@ main() {
 }
 
 interval() {
-  now="$(time +%l %M %S)"
-  tmux display -p "$now"  
+  local now="$(time +%l %M %S)"
+  tmux display -p ">> ${now}"  
 }
 
 getIcon() {
