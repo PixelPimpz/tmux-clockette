@@ -10,4 +10,4 @@ h=$( date +%-H )
 time_h=$(( (h%12)-1  ))
 (( time_h == 0 )) && $time_h=12
 hour="${hours[$time_h]}"
-tmux display -p "time: $hour"
+tmux display -p "time: $hour $(getIcon $hour)"
