@@ -7,7 +7,12 @@ main() {
   h=$( date +%l )
   hour="${hours[((h-1))]}"
   tmux set -g '@clock' "$(getIcon $hour)"
-  (( DEBUG == 1 )) && debug
+  (( DEBUG == 1 )) && interval; debug
+}
+
+interval() {
+  now="$(time +%l %M %S)"
+  tmux display -p "$now"  
 }
 
 getIcon() {
