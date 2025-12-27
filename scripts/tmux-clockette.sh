@@ -7,5 +7,5 @@ getIcon() {
   eval $(tmux display -p "#{@GET_ICON}") $1
 }
 h=$( date +%l )
-hour="${hours[9]}"
+hour="${hours[((h-1))]}"
 tmux display -p "time: $hour $(getIcon $hour)"
