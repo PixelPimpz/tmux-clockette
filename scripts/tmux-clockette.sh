@@ -7,5 +7,5 @@ getIcon() {
 }
 hours=("one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve")
 time_h=$(( 1+$( date +%-H )%12 ))
-hour=$hours[$time_h]
+hour="${hours[$time_h]}"
 tmux display -p "time: $hour"
