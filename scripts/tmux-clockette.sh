@@ -16,7 +16,7 @@ getIcon() {
 
 debug() {
   tmux display -p "time: $hour $(getIcon $hour)"
+  local next="$(( $(date -d 'next hour' +%s)-$(date +%s)-$(date +%S) ))" 
   tmux display -p "$(printf 'next check in %d seconds.\n' $next)"
-  tmux display -p ">> $(( $(date -d 'next hour' +%s)-$(date +%s)-$(date +%S) ))" 
 }
 main
