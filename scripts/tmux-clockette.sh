@@ -8,4 +8,5 @@ getIcon() {
 }
 h=$( date +%l )
 hour="${hours[((h-1))]}"
-tmux display -p "time: $hour $(getIcon $hour)"
+(( DEBUG == 1 )) && tmux display -p "time: $hour $(getIcon $hour)"
+tmux set -g '@clock' "$(getIcon $hour)"
