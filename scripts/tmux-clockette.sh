@@ -12,7 +12,7 @@ main() {
 
 interval() {
   local now="$(date +%l %M %S)"
-  tmux display -p ">> ${now}"  
+  tmux display -p '>> #(echo "$now")'                       
 }
 
 getIcon() {
