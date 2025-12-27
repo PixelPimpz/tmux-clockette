@@ -5,4 +5,4 @@ tmux display  -p "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PLUG_ROOT="$(tmux display -p "#{@PLUG_ROOT}")"
 tmux display -p "clockette"
 
-#$PLUG_ROOT/scripts/tmux-clockette.sh
+$PLUG_ROOT/scripts/tmux-clockette.sh
