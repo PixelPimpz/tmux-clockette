@@ -12,5 +12,5 @@ tmux set -g '@clock' "$(getIcon $hour)"
 next=$(( $(date -d 'next hour' +%s)-$(date +%s)$-$(date +%S) ))
 if (( DEBUG == 1 )); then
   tmux display -p "time: $hour $(getIcon $hour)"
-  tmux display -p "#{printf 'next check in %d seconds.\n' $next}"
+  tmux display -p "#(printf 'next check in %d seconds.\n' $next)"
 fi
