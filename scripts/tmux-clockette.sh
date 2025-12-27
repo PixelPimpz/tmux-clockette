@@ -9,3 +9,4 @@ hours=("one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "ele
 time_h=$(( $( date +%-H )%12 ))
 hour="${hours[$time_h]}"
 tmux display -p "time: $hour"
+tmux display -p "$( getIcon "$hour" )"
