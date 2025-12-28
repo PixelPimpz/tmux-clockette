@@ -26,7 +26,9 @@ getInterval() {
 }
 
 getIcon() {
-  eval $(tmux display -p "#{@GET_ICON}") $1
+  local hour="$1"
+  local H="$("$GET_ICON" "$hour")"
+  echo "$H"
 }
 
 debug() {
