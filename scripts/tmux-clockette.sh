@@ -9,7 +9,7 @@ main() {
   tmux set -g '@clock' "$(getIcon $now_h)"
   local interval=$(getInterval "$now") 
   tmux display -p "${interval} seconds to next hour"
-  (( DEBUG == 1 )) && debug "$(tmux display -p "#{@clock}")" ${interval} "${now}"
+  (( DEBUG == 1 )) && debug "$(tmux display -p "#{@clock}" ${interval} "${now}")"
 }
 
 getInterval() {
