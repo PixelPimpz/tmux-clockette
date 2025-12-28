@@ -10,15 +10,13 @@ main() {
   tmux display -p "Current hour:${now_ht}"
   tmux set -g '@clock' "$(getIcon ${now_ht})"
   local interval=$(getInterval "$now") 
-  tmux display -p "${interval} seconds to next hour"
-  (( DEBUG == 1 )) && debug "$(tmux display -p "#{@clock}")" "${interval}" "${now}"
 }
 
 getInterval() {
   local now="$1"
   local s_to_minute=$((60 - $(awk -F: '{print $3}' <<< $now) )) 
   local m_to_hour=$((60 - $(awk -F: '{print $2}' <<< $now) )) 
-  local s_to_minute ))
+  local s_to_hour=$(( (m_to_hour * 60)+ s_to_minute ))
   if ((DEBUG==1)); then
     debug "$(tmux display -p "${s_to_minute} seconds to next minute")"
     debug "$(tmux display -p "${m_to_hour} minutes to next hour")"
