@@ -6,7 +6,7 @@ GET_ICON=$(tmux display -p "#{@GET_ICON}")
 hours=("one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve")
 
 main() {
-  local now="$(date +%l:%M:%S)"
+  local now="$(date +%-l:%M:%S)"
   local now_hd="$(awk -F: '{print $1}' <<< $now)"
   local now_ht="${hours[$((now_hd-1))]}"
 
@@ -23,10 +23,11 @@ main() {
   debug ">> ${interval} seconds to $(( now_hd + 1 )):00"
 
   setClock "$clock"
-  
-  ## start timer to run at top of next hour
-  Timer "$interval" & TimerPID=$!
-  kill $TimerPID 
+  ## check for existing TimerPID and kill the process 
+  # before starting a new one then
+  # start timer to run at top of next hour
+  [[ -n "$TimerPID" ]] && kill "$TimerPID"
+  Timer "$interval" "main" & TimerPID=$!
 }
 
 # set a global tmux option (-g) '@clock' 
@@ -50,11 +51,11 @@ Timer() {
   local duration="$1"
   local action="$2"
   (( $(isInt $duration) != 0 )) && fatal "duration is not an integer"
-  [[ declare -F "$action" >/dev/null ]] || fatal "$action not declared in this script"
+  declare -F "$action" >/dev/null || fatal "$action not declared in this script"
   (
     sleep "$duration"
     debug ">> updating the clock icon at $(date +%l:%M:%S)"
-    main
+    "$action"
   ) &
   debug "timer for $duration running..."
 }
