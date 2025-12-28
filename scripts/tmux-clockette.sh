@@ -14,8 +14,10 @@ interval() {
   local now="$(date +%l:%M:%S)"
   local delta_s=$((60 - $(awk -F: '{print $3}' <<< $now) )) 
   local delta_m=$((60 - $(awk -F: '{print $2}' <<< $now) )) 
+  local delta=$(( ( delta_m * 60 ) + delta_s ))
   tmux display -p "${delta_s} seconds to next minute"
-  tmux display -p "${delta_m} seconds to next hour"
+  tmux display -p "${delta_m} minutes to next hour"
+  tmux display -p "${delta} seconds to next hour"
 }
 
 getIcon() {
