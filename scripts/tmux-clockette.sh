@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 DEBUG=1
-((DEBUG == 1)) && tmux display -p "tmux-clockette.sh running..."
 hours=("one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve")
 
 main() {
@@ -17,7 +16,8 @@ getInterval() {
   local s_to_minute=$((60 - $(awk -F: '{print $3}' <<< $now) )) 
   local m_to_hour=$((60 - $(awk -F: '{print $2}' <<< $now) )) 
   local s_to_hour=$(( (m_to_hour * 60)+ s_to_minute ))
-  if ((DEBUG==1)); then
+  if (( DEBUG == 1 )); then
+    tmux display -p "tmux-clockette.sh is running..."
     debug "$(tmux display -p "${s_to_minute} seconds to next minute")"
     debug "$(tmux display -p "${m_to_hour} minutes to next hour")"
     debug "$(tmux display -p "${s_to_hour} seconds to next hour")"
