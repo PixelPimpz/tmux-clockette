@@ -7,8 +7,12 @@ main() {
   local now="$(date +%l:%M:%S)"
   local now_hd="$(awk -F: '{print $1}' <<< $now)"
   local now_ht="${hours[$((now_hd-1))]}"
+
+  ## pass the date string to getInterval for parsing
   local interval="$(getInterval $now)" 
   (( "$?" != 0 )) && fatal "getInterval failed"
+
+  ## tmux-run getIcon with the text hour
   local clock=$(tmux run "$GET_ICON $now_ht")
   if (( DEBUG != 0 ));then
     tmux display -p "tmux-clockette.sh is running..."
@@ -20,6 +24,11 @@ main() {
   setClock "$clock"
 }
 
+# set a global tmux option (-g) '@clock' 
+# with the newly acquired clock icon
+# TODO? read the 12 icons from unicodes. 
+# only the first address need be known 
+# access the rest with (( 0xXXXX++ ))
 setClock() {
   local clock=$1
   tmux set -g '@clock' "$clock"
