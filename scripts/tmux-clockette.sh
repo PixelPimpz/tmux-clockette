@@ -32,6 +32,7 @@ main() {
 setClock() {
   local clock=$1
   tmux set -g '@clock' "$clock"
+  tmux source "$TMUX_ROOT/tmux.conf"
 }
 
 getInterval() {
@@ -40,6 +41,11 @@ getInterval() {
   local m_to_hour=$((60 - $(awk -F: '{print $2}' <<< $now) )) 
   local s_to_hour=$(( ( m_to_hour * 60 ) + s_to_minute ))
   echo "${s_to_hour}"
+}
+
+Timer() {
+  local duration="$1"
+
 }
 
 debug() {
