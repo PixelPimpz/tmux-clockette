@@ -21,6 +21,7 @@ getInterval() {
   local delta=$(( ( delta_m * 60 ) + delta_s ))
   tmux display -p "${delta_s} seconds to next minute"
   tmux display -p "${delta_m} minutes to next hour"
+  tmux display -p "${delta} seconds to next hour"
   echo "${delta}"
 }
 
