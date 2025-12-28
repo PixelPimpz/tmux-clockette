@@ -8,8 +8,11 @@ main() {
   local now_ht="${hours[((now_hd-1))]}"
   tmux set -g '@clock' "$(getIcon ${now_ht})"
   local interval="$(getInterval $now)" 
-  tmux display -p ">> Current hour: ${now_ht}"
-  tmux display -p ">> ${interval} seconds to $(( now_hd + 1 )):00"
+  if (( DEBUG != 0 ));then
+    tmux display -p "tmux-clockette.sh is running..."
+    tmux display -p ">> Current hour: ${now_ht}"
+    tmux display -p ">> ${interval} seconds to $(( now_hd + 1 )):00"
+  fi
 }
 
 getInterval() {
