@@ -8,7 +8,7 @@ main() {
   local now_ht="${hours[((now_hd-1))]}"
   tmux display -p "Current hour:${now_ht}"
   tmux set -g '@clock' "$(getIcon ${now_ht})"
-  local interval="$(getInterval $now)" 
+  local interval="$(getInterval $now) seconds to $(( now_hd + 1 )):00" 
   tmux display -p ">> ${interval}"
 }
 
