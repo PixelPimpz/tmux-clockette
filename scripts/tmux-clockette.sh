@@ -32,7 +32,6 @@ debug() {
   local clock="$1"
   local interval="$2"
   local now="$3"
-  tmux display -p "time: ${now} ${clock}"
-  tmux display -p "$(printf 'next check in %d seconds.\n' $interval)"
+  tmux display -p "time:${clock} ${now} next run in ${interval} seconds"
 }
 main
