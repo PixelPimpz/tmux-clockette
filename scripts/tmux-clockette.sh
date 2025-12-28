@@ -16,6 +16,12 @@ main() {
     tmux display -p ">> Current hour: ${now_ht}"
     tmux display -p ">> ${interval} seconds to $(( now_hd + 1 )):00"
   fi
+  setClock "$clock"
+}
+
+setClock() {
+  local clock=$1
+  tmux set -g '@clock' "$clock"
 }
 
 getInterval() {
@@ -24,12 +30,6 @@ getInterval() {
   local m_to_hour=$((60 - $(awk -F: '{print $2}' <<< $now) )) 
   local s_to_hour=$(( ( m_to_hour * 60 ) + s_to_minute ))
   echo "${s_to_hour}"
-}
-
-getIcon() {
-  local hour="$1"
-  local H="$(eval $("$GET_ICON" "$hour") )"
-  echo "$H"
 }
 
 debug() {
