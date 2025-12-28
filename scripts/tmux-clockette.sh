@@ -15,7 +15,6 @@ interval() {
   local delta_s=$((60 - $(awk -F: '{print $3}' <<< $now) )) 
   local delta_m=$((60 - $(awk -F: '{print $2}' <<< $now) )) 
 
-  tmux display -p "$(printf '%d seconds to the next minute\n' $delta_s)" 
 }
 
 getIcon() {
