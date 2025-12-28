@@ -5,7 +5,7 @@ hours=("one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "ele
 main() {
   local now="$(date +%l:%M:%S)"
   local now_hd="$(awk -F: '{print $1}' <<< $now)"
-  local now_ht="${hours[((now_hd-1))]}"
+  local now_ht="${hours[$((now_hd-1))]}"
   tmux set -g '@clock' "$(getIcon ${now_ht})"
   local interval="$(getInterval $now)" 
   if (( DEBUG != 0 ));then
