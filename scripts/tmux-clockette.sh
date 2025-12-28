@@ -26,7 +26,7 @@ main() {
   ## check for existing TimerPID and kill the process 
   # before starting a new one then
   # start timer to run at top of next hour
-  Timer "$interval" "main" & TimerPID=$!
+  #Timer "$interval" "main" & TimerPID=$!
 }
 
 # set a global tmux option (-g) '@clock' 
