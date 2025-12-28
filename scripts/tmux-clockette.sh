@@ -32,7 +32,6 @@ main() {
 setClock() {
   local clock=$1
   tmux set -g '@clock' "$clock"
-  tmux source "$TMUX_ROOT/tmux.conf"
 }
 
 getInterval() {
