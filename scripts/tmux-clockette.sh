@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 DEBUG=1
 GET_ICON=$(tmux display -p "#{@GET_ICON}") 
+## @GET_ICON=/home/lucifer/.config/tmux/plugins/tmux-geticon/scripts/tmux-geticon.sh
+#
 hours=("one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve")
 
 main() {
@@ -14,26 +16,28 @@ main() {
 
   ## tmux-run getIcon with the text hour
   local clock=$(tmux run "$GET_ICON $now_ht")
-  if (( DEBUG != 0 ));then
-    tmux display -p "tmux-clockette.sh is running..."
-    tmux display -p ">> GET_ICON: $GET_ICON"
-    tmux display -p ">> clock: $clock"
-    tmux display -p ">> Current hour: ${now_ht}"
-    tmux display -p ">> ${interval} seconds to $(( now_hd + 1 )):00"
-  fi
+  debug "tmux-clockette.sh is running..."
+  debug ">> GET_ICON: $GET_ICON"
+  debug ">> clock: $clock"
+  debug ">> Current hour: ${now_ht}"
+  debug ">> ${interval} seconds to $(( now_hd + 1 )):00"
+
   setClock "$clock"
+  
+  ## start timer to run at top of next hour
+  Timer "$interval" & TimerPID=$!
+  kill $TimerPID 
 }
 
 # set a global tmux option (-g) '@clock' 
 # with the newly acquired clock icon
-# TODO? read the 12 icons from unicodes. 
-# only the first address need be known 
-# access the rest with (( 0xXXXX++ ))
 setClock() {
   local clock=$1
   tmux set -g '@clock' "$clock"
 }
 
+isInt() { [[ $1 =~ ^-?[0-9]+$ ]] }
+ 
 getInterval() {
   local now="$1"
   local s_to_minute=$((60 - $(awk -F: '{print $3}' <<< $now) )) 
@@ -44,11 +48,21 @@ getInterval() {
 
 Timer() {
   local duration="$1"
-
+  local action="$2"
+  (( $(isInt $duration) != 0 )) && fatal "duration is not an integer"
+  [[ declare -F "$action" >/dev/null ]] || fatal "$action not declared in this script"
+  (
+    sleep "$duration"
+    debug ">> updating the clock icon at $(date +%l:%M:%S)"
+    main
+  ) &
+  debug "timer for $duration running..."
 }
 
 debug() {
-  local D="$1"
-  tmux display -p "$D"
+  if (( DEBUG == 1 )); then
+    local D="$1"
+    tmux display -p "$D"
+  fi
 }
 main
