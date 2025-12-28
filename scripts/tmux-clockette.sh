@@ -16,13 +16,15 @@ main() {
 
 getInterval() {
   local now="$1"
-  local delta_s=$((60 - $(awk -F: '{print $3}' <<< $now) )) 
-  local delta_m=$((60 - $(awk -F: '{print $2}' <<< $now) )) 
-  local delta=$(( ( delta_m * 60 ) + delta_s ))
-  tmux display -p "${delta_s} seconds to next minute"
-  tmux display -p "${delta_m} minutes to next hour"
-  tmux display -p "${delta} seconds to next hour"
-  echo "${delta}"
+  local s_to_minute=$((60 - $(awk -F: '{print $3}' <<< $now) )) 
+  local m_to_hour=$((60 - $(awk -F: '{print $2}' <<< $now) )) 
+  local s_to_minute ))
+  if ((DEBUG==1)); then
+    debug "$(tmux display -p "${s_to_minute} seconds to next minute")"
+    debug "$(tmux display -p "${m_to_hour} minutes to next hour")"
+    debug "$(tmux display -p "${s_to_hour} seconds to next hour")"
+  fi
+  echo "${s_to_hour}"
 }
 
 getIcon() {
@@ -30,9 +32,7 @@ getIcon() {
 }
 
 debug() {
-  local clock="$1"
-  local interval="$2"
-  local now="$3"
-  tmux display -p "time:${clock} ${now} next run in ${interval} seconds"
+  local D="$1"
+  tmux display -p "$D"
 }
 main
