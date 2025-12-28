@@ -26,7 +26,6 @@ main() {
   ## check for existing TimerPID and kill the process 
   # before starting a new one then
   # start timer to run at top of next hour
-  [[ -n "$TimerPID" ]] && kill "$TimerPID"
   Timer "$interval" "main" & TimerPID=$!
 }
 
