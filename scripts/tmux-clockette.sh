@@ -6,6 +6,7 @@ hours=("one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "ele
 main() {
   local now="$(date +%l:%M:%S)"
   local now_h="$(awk -F: '{print $1}' <<< $now)"
+  tmux display -p "now_h: ${now_h}"
   tmux set -g '@clock' "$(getIcon $now_h)"
   local interval=$(getInterval "$now") 
   tmux display -p "${interval} seconds to next hour"
@@ -29,8 +30,8 @@ getIcon() {
 debug() {
   local clock="$1"
   local interval="$2"
-  local localtime="$3"
-  tmux display -p "time: ${localtime} ${clock}"
+  local now="$3"
+  tmux display -p "time: ${now} ${clock}"
   tmux display -p "$(printf 'next check in %d seconds.\n' $interval)"
 }
 main
