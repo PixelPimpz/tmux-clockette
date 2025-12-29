@@ -3,7 +3,7 @@ DEBUG=1
 TIMER_PID=
 ## get clock icons from nerdfonts
 main() {
-  LOCALTIME="$(date +%I:%M:%S)"
+  LOCALTIME="$(date +%-I:%M:%S)"
   CLOCK=$( echo -e "\\U$(printf '%x\n' $((0xF144B + $(date +%I) - 1 )))")
   INTERVAL=$(getInterval "$LOCALTIME")
   
@@ -16,7 +16,7 @@ main() {
   # set clock
   setClock "${CLOCK}"
   startTimer "$INTERVAL" "cleanup" & TIMER_PID=$!
-  debug ">> TIMER_PID: ${TIMER_PID}"
+  debug ">> TIMER_PID: $TIMER_PID"
 }
 
 startTimer() {
@@ -50,9 +50,12 @@ setClock() {
 }
 
 cleanup() {
-  local timer_pid="$1"
+  local TPID="$1"
   debug ">> Timer complete. Checking for zombie processes..."
-  
-#  main
+  if kill -0 "$timer_pid" &> /dev/null; then
+    kill "$TPID"
+  fi
+  main
 }
+
 main
