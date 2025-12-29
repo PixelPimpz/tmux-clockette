@@ -15,7 +15,7 @@ main() {
   
   # set clock
   setClock "${CLOC}"
-#  startTimer "$INTERVAL" "cleanup" & TIMER_PID=$!
+  startTimer "$INTERVAL" "cleanup" & TIMER_PID=$!
   debug ">> TIMER_PID: $TIMER_PID"
 }
 
@@ -27,7 +27,10 @@ startTimer() {
     debug ">> setting clock at $(date +%T)"
     "$ACTION"
   ) &
+  #map a key to stop the timer
+  tmux bind -r C-X display -p ">> Stopping clockette timer." \; run-shell "kill ${TIMER_PID}"
   debug ">> TIMER for $ACTION started for $SEC seconds"
+  debug ">> [CTRL]+X to abort timer"
 }
 
 getInterval() {
