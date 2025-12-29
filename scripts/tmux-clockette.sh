@@ -4,6 +4,10 @@ TIMER_PID=
 ## get clock icons from nerdfonts
 main() {
   LOCALTIME="$(date +%-I:%M:%S)"
+  ## load clock nerdfont clock glyphs 
+  # start with the 1o'clock and add 11
+  # outline variant: 0xF144B
+  # solid variant:   0xF143F
   CLOCK=$( echo -e "\\U$(printf '%x\n' $((0xF144B + $(date +%I) - 1 )))")
   INTERVAL=$(getInterval "$LOCALTIME")
   
