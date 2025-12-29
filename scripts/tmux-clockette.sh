@@ -14,8 +14,8 @@ main() {
   debug ">> INTERVAL: ${INTERVAL}"
   
   # set clock
-  setClock "${CLOCK}"
-  startTimer "$INTERVAL" "cleanup" & TIMER_PID=$!
+  setClock "${CLOC}"
+#  startTimer "$INTERVAL" "cleanup" & TIMER_PID=$!
   debug ">> TIMER_PID: $TIMER_PID"
 }
 
