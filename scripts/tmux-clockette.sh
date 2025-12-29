@@ -53,6 +53,6 @@ cleanup() {
   local timer_pid="$1"
   debug ">> Timer complete. Checking for zombie processes..."
   
-  main
+#  main
 }
 main
