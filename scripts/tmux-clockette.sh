@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 DEBUG=1
 TIMER_PID=
+
 ## get clock icons from nerdfonts
 main() {
   LOCALTIME="$(date +%-I:%M:%S)"
@@ -9,17 +10,19 @@ main() {
   # outline variant: 0xF144B
   # solid variant:   0xF143F
   CLOCK=$( echo -e "\\U$(printf '%x\n' $((0xF144B + $(date +%I) - 1 )))")
+  setClock "${CLOCK}"
   INTERVAL=$(getInterval "$LOCALTIME")
+  startTimer "$INTERVAL" "cleanup" & TIMER_PID=$!
+  #map a key to stop the timer
+  tmux bind -r C-X display -p ">> Stopping clockette timer." \; run-shell "kill ${TIMER_PID}"
+  debug ">> TIMER for $ACTION started for $SEC seconds"
+  debug ">> [CTRL]+X to abort timer"
   
   # report VARS and VALS to stdout
   debug "scripts/tmux-clockette.sh is running..."
   debug ">> CLOCK: ${CLOCK}"
   debug ">> LOCALTIME: ${LOCALTIME}"
   debug ">> INTERVAL: ${INTERVAL}"
-  
-  # set clock
-  setClock "${CLOC}"
-  startTimer "$INTERVAL" "cleanup" & TIMER_PID=$!
   debug ">> TIMER_PID: $TIMER_PID"
 }
 
@@ -31,10 +34,6 @@ startTimer() {
     debug ">> setting clock at $(date +%T)"
     "$ACTION"
   ) &
-  #map a key to stop the timer
-  tmux bind -r C-X display -p ">> Stopping clockette timer." \; run-shell "kill ${TIMER_PID}"
-  debug ">> TIMER for $ACTION started for $SEC seconds"
-  debug ">> [CTRL]+X to abort timer"
 }
 
 getInterval() {
