@@ -3,4 +3,4 @@ $PLUG_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmux setenv -u '@PLUG_ROOT'
 tmux setenv '@PLUG_ROOT' "$PLUG_ROOT"
 tmux bind M-c run "$PLUG_ROOT/scripts/tmux-clockette.sh" 
-tmux run "$PLUG_ROOT/scripts/tmux-clockette.sh
+tmux run "$PLUG_ROOT/scripts/tmux-clockette.sh"
