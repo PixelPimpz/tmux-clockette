@@ -4,36 +4,33 @@ TIMER_PID=
 
 ## get clock icons from nerdfonts
 main() {
-  LOCALTIME="$(date +%-I:%M:%S)"
-  ## load clock nerdfont clock glyphs 
-  # start with the 1o'clock and add 11
-  # outline variant: 0xF144B
-  # solid variant:   0xF143F
-  CLOCK=$( echo -e "\\U$(printf '%x\n' $((0xF144B + $(date +%I) - 1 )))")
-  setClock "${CLOCK}"
-  INTERVAL=$(getInterval "$LOCALTIME")
-  startTimer "$INTERVAL" "cleanup" & TIMER_PID=$!
-  #map a key to stop the timer
-  tmux bind -r C-X display -p ">> Stopping clockette timer." \; run-shell "kill ${TIMER_PID}"
-  debug ">> TIMER for $ACTION started for $SEC seconds"
-  debug ">> [CTRL]+X to abort timer"
-  
-  # report VARS and VALS to stdout
   debug "scripts/tmux-clockette.sh is running..."
-  debug ">> CLOCK: ${CLOCK}"
-  debug ">> LOCALTIME: ${LOCALTIME}"
-  debug ">> INTERVAL: ${INTERVAL}"
-  debug ">> TIMER_PID: $TIMER_PID"
+  timer 
 }
 
-startTimer() {
-  local SEC="$1"
-  local ACTION="$2"
+timer() {
+  local pid=$!
+  local firstrun=
+  local localtime="$(date +%-I:%M:%S)"
+  [[ -z $firstrun ]] && setClock "$localtime" && firstrun="false"
+  if (( DEBUG == 1 )); then
+    local interval=10
+  else 
+    local interval=$(getInterval "$localtime")
+  fi
+  debug ">> sleeping for $interval until $(awk -F: -v OS='1' '{printf "%d:00", OS + $1 }')"
   (
-    sleep 15
-    debug ">> setting clock at $(date +%T)"
-    "$ACTION"
+    sleep $interval
+
+    debug ">> setting clock at $localtime"
+    setClock "$localtime"
+    timeManager 
   ) &
+  
+  debug ">> TIMER for $ACTION started for $SEC seconds"
+  #map a key to stop the timer
+  tmux bind -r C-X display -p ">> Stopping clockette timer." \; run-shell "kill ${TIMER_PID}"
+  debug ">> [CTRL]+X to abort timer"
 }
 
 getInterval() {
@@ -49,19 +46,25 @@ debug() {
     tmux display -p "$M"
   fi
 }
-
+ 
 setClock() {
-  local clock="$1"
-  tmux set -g '@clock' "$clock"
+  local localtime="$1"
+  ## load clock nerdfont clock glyphs 
+  # start with the 1o'clock and add 11
+  # outline variant: 0xF144B
+  # solid variant:   0xF143F
+  local H="$(awk -F: '{printf "%d\n", $1}' <<< $localtime)"
+  local CLOCK=$( echo -e "\\U$(printf '%x\n' $((0xF144B + ($H - 1) )))")
+  tmux set -g '@clock' "${CLOCK}"
 }
 
-cleanup() {
-  local TPID="$1"
+timeManager() {
+  local TPID=$1
   debug ">> Timer complete. Checking for zombie processes..."
   if kill -0 "$timer_pid" &> /dev/null; then
     kill "$TPID"
   fi
-  main
+  timer 
 }
 
 main
