@@ -61,4 +61,4 @@ timeManager() {
   timer 
 }
 
-main &
+main 
