@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-DEBUG=1
+DEBUG=0
 TIMER_PID=
 
 ## get clock icons from nerdfonts
