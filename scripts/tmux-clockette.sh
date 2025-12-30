@@ -19,7 +19,7 @@ timer() {
     sleep $interval
     debug ">> setting clock at $localtime"
     setClock "$localtime"
-    timeManager 
+    timeManager "$pid" 
   ) &
   
   debug ">> TIMER for $ACTION started for $SEC seconds"
@@ -56,7 +56,7 @@ setClock() {
 timeManager() {
   local TPID=$1
   debug ">> Timer complete. Checking for zombie processes..."
-  if kill -0 "$timer_pid" &> /dev/null; then
+  if kill -0 "$TPID" &> /dev/null; then
     kill "$TPID"
   fi
   timer 
