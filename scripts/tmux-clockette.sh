@@ -5,7 +5,7 @@ TIMER_PID=
 ## get clock icons from nerdfonts
 main() {
   debug "scripts/tmux-clockette.sh is running..."
-  timer 
+  timer & 
 }
 
 timer() {
@@ -17,7 +17,6 @@ timer() {
   debug ">> sleeping for $interval until $(awk -F: -v OS='1' '{printf "%d:00", OS + $1 }')"
   (
     sleep $interval
-
     debug ">> setting clock at $localtime"
     setClock "$localtime"
     timeManager 
