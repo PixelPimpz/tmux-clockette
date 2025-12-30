@@ -4,7 +4,7 @@ DEBUG=1
 ## get clock icons from nerdfonts
 main() {
   debug "scripts/tmux-clockette.sh is running..."
-  timer & 
+  timer  
 }
 
 timer() {
@@ -61,4 +61,4 @@ timeManager() {
   timer 
 }
 
-main
+main &
