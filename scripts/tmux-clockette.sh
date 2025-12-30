@@ -12,12 +12,12 @@ timer() {
   local pid=$!
   local firstrun=
   local localtime="$(date +%-I:%M:%S)"
-  [[ -z $firstrun ]] && setClock "$localtime" && firstrun="false"
   if (( DEBUG == 1 )); then
     local interval=10
   else 
     local interval=$(getInterval "$localtime")
   fi
+  [[ -z $firstrun ]] && setClock "$localtime" && firstrun="false"
   debug ">> sleeping for $interval until $(awk -F: -v OS='1' '{printf "%d:00", OS + $1 }')"
   (
     sleep $interval
