@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-$PLUG_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PLUG_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 tmux display-message -p ">> $PLUG_ROOT"
 tmux setenv -u '@PLUG_ROOT'
 tmux setenv '@PLUG_ROOT' "$PLUG_ROOT"
