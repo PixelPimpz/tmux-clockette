@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-tmux setenv -u '@PLUG_ROOT'
 tmux setenv '@PLUG_ROOT' "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PLUG_ROOT=$( tmux display -p "#{@PLUG_ROOT}" )
 tmux setenv '@DEBUG' '1'
 tmux bind M-c run "$PLUG_ROOT/scripts/tmux-clockette.sh" 
 tmux run "$PLUG_ROOT/scripts/tmux-clockette.sh"
+tmux setenv -u '@PLUG_ROOT'
