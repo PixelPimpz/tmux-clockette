@@ -41,7 +41,7 @@ setClock() {
   local hour="$(awk -F: '{printf "%d\n", $1}' <<< $localtime)"
   local clock_now=$(( clock_start + hour - 1 ))
   local clock="$( echo "$( printf "\U%x" "$clock_now" )")"
-  tmux set -g '@clock' "$clock"ZZ
+  tmux set -g '@clock' "$clock"
 }
 
 main 
