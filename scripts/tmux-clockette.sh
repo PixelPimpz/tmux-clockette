@@ -35,13 +35,24 @@ debug() {
   fi
 }
  
+#setClock() {
+#  local localtime="$1"
+#  local clock_start=0xF144B
+#  local hour="$(awk -F: '{printf "%d\n", $1}' <<< $localtime)"
+#  local clock_now=$(( clock_start + hour - 1 ))
+#  local clock="$( printf "\U%x" "$clock_now" )"
+#  tmux set -g '@clock' $( echo "\$clock" )
+#}
+
 setClock() {
-  local localtime="$1"
-  local clock_start=0xF144B
-  local hour="$(awk -F: '{printf "%d\n", $1}' <<< $localtime)"
-  local clock_now=$(( clock_start + hour - 1 ))
-  local clock="$( printf "\U%x" "$clock_now" )"
-  tmux set -g '@clock' $( echo "\$clock" )
+  7local localtime=$1
+  debug ">> localtime: $localtime"
+  local hex_first="0xF144B"
+  debug ">> codepoint: $codepoint"
+  local h="$(awk -F: '{print $1}' <<< $localtime )"
+  debug ">> hour:$h"
+  local hex_cur_h="$(( hex_first + h - 1 ))"
+  debug ">> hex_cur_h: $hex_cur_h"
 }
 
-main 
+main  
