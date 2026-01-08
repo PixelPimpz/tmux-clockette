@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
-tmux setenv '@PLUG_ROOT' "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-PLUG_ROOT=$( tmux display -p "#{@PLUG_ROOT}" )
-tmux bind M-c run "$PLUG_ROOT/scripts/tmux-clockette.sh" 
-tmux run-shell -b "$PLUG_ROOT/scripts/tmux-clockette.sh"
-tmux setenv -u '@PLUG_ROOT'
+PID_FILE="/tmp/tmux-clockette.pid"
+PLUG_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [ ! -f $PID_FILE || ! ps -p $(cat $PID_FILE ) >/dev/null ]; then
+    tmux run-shell -b "$PLUG_ROOT/scripts/tmux-clockette.sh"
+  else
+    tmux display -p "clockette is running@ \"Let it be.\" --The Beatles"
+    exit 0
+  fi
+fi
