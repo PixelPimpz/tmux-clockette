@@ -6,5 +6,4 @@ if [ ! -f $PID_FILE || ! ps -p "$(cat $PID_FILE )" >/dev/null ]; then
   else
     tmux display -p "clockette is running@ \"Let it be.\" --The Beatles"
     exit 0
-  fi
 fi
