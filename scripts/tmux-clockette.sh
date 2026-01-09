@@ -39,7 +39,7 @@ setClock() {
   local hour=$1
   local hex_base="0xF144B"
   local hex_now="$( printf '%X\n' "$(( hex_base + hour - 1 ))")"
-  local icon="$( echo -e "\U$hex_now"
+  local icon="$( echo -e "\U$hex_now")"
   debug ">> localtime: $localtime"
   debug ">> hex_base: $hex_base"
   debug ">> hex_now: 0x${hex_now}"
