@@ -38,7 +38,7 @@ debug() {
 setClock() {
   local hour=$1
   local hex_base="0xF144B"
-  local hex_now="$( printf '\\U%X\n' "$(( hex_base + hour - 1 ))")"
+  local hex_now="$( printf '\U%X\n' "$(( hex_base + hour - 1 ))")"
   debug ">> localtime: $localtime"
   debug ">> hex_base: $hex_base"
   debug ">> hex_now: $hex_now"
