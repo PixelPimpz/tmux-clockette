@@ -40,7 +40,7 @@ setClock() {
   local localtime=$1
   debug ">> localtime: $localtime"
   local hex_first="0xF144B"
-  debug ">> codepoint: $codepoint"
+  debug ">> hex_first: $hex_first"
   local h="$(awk -F: '{print $1}' <<< $localtime )"
   debug ">> hour:$h"
   local hex_cur_h="$(( hex_first + h - 1 ))"
