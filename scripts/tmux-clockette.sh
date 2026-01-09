@@ -43,7 +43,7 @@ setClock() {
   debug ">> hex_first: $hex_first"
   local h="$(awk -F: '{print $1}' <<< $localtime )"
   debug ">> hour:$h"
-  local hex_cur_h="$(( hex_first + h - 1 ))"
+  local hex_cur_h="$( printf '%X\n' "$(( hex_first + h - 1 ))")"
   debug ">> hex_cur_h: $hex_cur_h"
 }
 
