@@ -42,6 +42,7 @@ setClock() {
   debug ">> localtime: $localtime"
   debug ">> hex_base: $hex_base"
   debug ">> hex_now: 0x${hex_now}"
+  debug ">> icon: \U${hex_now}"
 }
 
 main  
