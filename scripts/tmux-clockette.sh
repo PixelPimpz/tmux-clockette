@@ -16,14 +16,15 @@ main() {
   debug ">> clockette START. [CTRL-X] to stop"
 
   while true; do 
-    local localtime=$(date +%-I:%M:%S:%P)
+    local localtime=$(date +%-I:%M:%S:%p)
     local H=$(awk -F: '{print $1}' <<< "$localtime")
     local M=$(awk -F: '{print $2}' <<< "$localtime")
     local S=$(awk -F: '{print $3}' <<< "$localtime")
+    local P=$(awk -F: '{print $4}' <<< "$localtime")
     local interval=$(( 3600 - (M * 60) - S ))
     setClock "$H"
 
-    debug ">> clockette: sleeping for $interval seconds until $(( H + 1 )):00"
+    debug ">> clockette: sleeping for $interval seconds until $(( H + 1 )):00$P"
     sleep "$interval"
   done 
 }
