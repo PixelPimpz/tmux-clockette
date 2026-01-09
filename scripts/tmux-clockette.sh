@@ -17,12 +17,11 @@ main() {
 
   while true; do 
     local localtime=$(date +%-I:%M:%S)
-    setClock "$localtime"
-
     local H=$(awk -F: '{print $1}' <<< "$localtime")
     local M=$(awk -F: '{print $2}' <<< "$localtime")
     local S=$(awk -F: '{print $3}' <<< "$localtime")
     local interval=$(( 3600 - (M * 60) - S ))
+    setClock "$H"
 
     debug ">> clockette: sleeping for $interval seconds until $(( H + 1 )):00"
     sleep "$interval"
@@ -37,14 +36,12 @@ debug() {
 }
  
 setClock() {
-  local localtime=$1
+  local hour=$1
+  local hex_base="0xF144B"
+  local hex_now="$( printf '%X\n' "$(( hex_base + hour - 1 ))")"
   debug ">> localtime: $localtime"
-  local hex_first="0xF144B"
-  debug ">> hex_first: $hex_first"
-  local h="$(awk -F: '{print $1}' <<< $localtime )"
-  debug ">> hour:$h"
-  local hex_cur_h="$( printf '%X\n' "$(( hex_first + h - 1 ))")"
-  debug ">> hex_cur_h: $hex_cur_h"
+  debug ">> hex_base: $hex_base"
+  debug ">> hex_now: $hex_now"
 }
 
 main  
