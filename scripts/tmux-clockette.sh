@@ -42,6 +42,7 @@ setClock() {
   local hex_now="$( printf '%X\n' "$(( hex_base + hour - 1 ))")"
   local icon="$( echo -e "\U$hex_now")"
   debug ">> icon: $icon"
+  tmux set -g '@clock' "$icon"
 }
 
 main  
