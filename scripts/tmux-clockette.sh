@@ -2,6 +2,13 @@
 DEBUG=$( tmux display -p "#{@DEBUG}" )
 CLOCKETTE_PID="/tmp/tmux-clockette.pid"
 
+debug() {
+  local message="$1"
+  if (( DEBUG == 1 )); then
+    tmux display -p "$message"
+  fi
+}
+
 cleanup() {
   debug ">> Stopping tmux-clockette"
   rm -f "/tmp/tmux-clockette.pid"
@@ -29,12 +36,6 @@ main() {
   done 
 }
 
-debug() {
-  local message="$1"
-  if (( DEBUG == 1 )); then
-    tmux display -p "$message"
-  fi
-}
  
 setClock() {
   local hour=$1
