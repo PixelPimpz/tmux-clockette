@@ -48,8 +48,7 @@ setClock()
   debug ">> icon: $icon"
   tmux set -g @clock "$icon"
   tmux set -g @clockette "#[fg=#{@DarkOrange}]#{@TriangleL}#[bg=#{@Light0_S}]#[reverse]#{@clock}%l:%M%P #[bg=default]#[noreverse]#{@TriangleRInverse}"
-  #tmux set -g @date "#[fg=#{@DarkYellow}]#{TriangleL}#[bg=#{@Light0_S},reverse] %a. %b %e %Y #[bg=default,noreverse]#{@HemiR}"
-  tmux set -g @date "#[fg=#{@DarkYellow}]#{TriangleL}
+  tmux set -ag @clockette "#[fg=#{@DarkYellow}]#{TriangleL}#[bg=#{@Light0_S},reverse] %a. %b %e %Y #[bg=default,noreverse]#{@HemiR}"
 }
 
 main  
