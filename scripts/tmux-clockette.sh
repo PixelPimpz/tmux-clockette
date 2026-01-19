@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-DEBUG=$( tmux display -p "#{@DEBUG}" )
 CLOCKETTE_PID="/tmp/tmux-clockette.pid"
 SHARE="$( tmux show -gqv @CHER )/lib/share"
 source "$SHARE/dump.fun"
