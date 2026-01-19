@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 DEBUG=$( tmux display -p "#{@DEBUG}" )
 CLOCKETTE_PID="/tmp/tmux-clockette.pid"
-CHER=$( tmux show -gqv @CHER )
-source "$CHER/lib/share/dump.fun"
-source "$CHER/lib/share/fatal.fun"
+SHARE="$( tmux show -gqv @CHER )/lib/share"
+source "$SHARE/dump.fun"
+source "$SHARE/fatal.fun"
 
 trap fatal EXIT
 
