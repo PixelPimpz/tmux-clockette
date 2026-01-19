@@ -47,7 +47,7 @@ setClock()
   local icon="$( echo -e "\U$hex_now")"
   debug ">> icon: $icon"
   tmux set -g @clock "$icon"
-  tmux set -g @clockette "#[fg=#{@DarkOrange}]#{@TriangleL}#[bg=#{@Light0_S}]#[reverse]#{@clock} %l:%M #[bg=default]#[noreverse]#{@TriangleRInverse}"
+  tmux set -g @clockette "#[fg=#{@DarkOrange}]#{@TriangleL}#[bg=#{@Light0_S}]#[reverse]#{@clock}%l:%M%P #[bg=default]#[noreverse]#{@TriangleRInverse}"
 }
 
 main  
