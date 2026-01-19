@@ -37,13 +37,15 @@ main() {
 }
 
  
-setClock() {
+setClock() 
+{
   local hour=$1
   local hex_base="0xF144B"
   local hex_now="$( printf '%X\n' "$(( hex_base + hour - 1 ))")"
   local icon="$( echo -e "\U$hex_now")"
   debug ">> icon: $icon"
-  tmux set -g '@clock' "$icon"
+  tmux set -g @clock "$icon"
+  tmux set -g @clockette "#[fg=#{@DarkOrange}]#{@TriangleL}#[reverse]#{clock} %I:%m%s #[bg=default]#[noreverse]#{@TriangleRInverse}"
 }
 
 main  
