@@ -29,7 +29,7 @@ main()
 setClock() 
 {
   local hour=$1
-  local hex_base="0xF144B"
+  local hex_base="0xF143F"
   local hex_now="$( printf '%X\n' "$(( hex_base + hour - 1 ))")"
   local icon="$( echo -e "\U$hex_now")"
   dump ">> icon: $icon"
