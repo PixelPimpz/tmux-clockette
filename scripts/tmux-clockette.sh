@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 CLOCKETTE_PID="/tmp/tmux-clockette.pid"
-SHARE="$( tmux show -gqv @CHER )/lib/share"
+SHARE="$( tmux show -gqv @CHER )"
 source "$SHARE/dump.fun"
 source "$SHARE/fatal.fun"
 
