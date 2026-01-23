@@ -13,13 +13,14 @@ main()
   dump ">> clockette START. [CTRL-X] to stop"
 
   while true; do 
-    local localtime=$(date +%-I:%M:%S:%p)
+    local localtime=$(date +%-I:%M:%S:%p:%a)
     local H=$(awk -F: '{print $1}' <<< "$localtime")
     local M=$(awk -F: '{print $2}' <<< "$localtime")
     local S=$(awk -F: '{print $3}' <<< "$localtime")
     local P=$(awk -F: '{print $4}' <<< "$localtime")
+    local D=$(awk -F: '{print $5}' <<< "$localtime")
     local interval=$(( 3600 - (M * 60) - S ))
-    setClock "$H"
+    setClock "$H" "$M" "$D"
 
     dump ">> clockette: sleeping for $interval seconds until $(( H + 1 )):00$P"
     sleep "$interval"
@@ -29,14 +30,15 @@ main()
 setClock() 
 {
   local hour=$1
-  (( "$hour" >= 10 )) && local spacer=' ' || local spacer=''
+  local minute=$2
+  local day=$3
   local hex_base="0xF143F"
   local hex_now="$( printf '%X\n' "$(( hex_base + hour - 1 ))")"
   local icon="$( echo -e "\U$hex_now")"
   dump ">> icon: ${icon}"
   tmux set -g @clock "$icon"
-  tmux set -g @clockette "#[fg=#{@orange_b}]#{@TriangleL}#[bg=#{@bg0},bold]#[reverse]#{@clock} $hour#[blink]:#[noblink]%M%P #[bg=default]#[noreverse]#{@TriangleRInverse}"
-  tmux set -g @calendar "#[fg=#{@green}]#{@TriangleL}#[bg=#{@bg0},bold]#[reverse]%a %m|%e|%Y #[bg=default]#[noreverse]#{@HemiR}"
+  tmux set -g @clockette "#[fg=#{@orange_b}]#{@TriangleL}#[bg=#{@bg0},bold]#[reverse]#{@clock} $hour#[blink]:#[noblink]$minute%P #[bg=default]#[noreverse]#{@TriangleRInverse}"
+  tmux set -g @calendar "#[fg=#{@green}]#{@TriangleL}#[bg=#{@bg0},bold]#[reverse]${day:1:1} %m|%e|%Y #[bg=default]#[noreverse]#{@HemiR}"
 }
 
 main  
