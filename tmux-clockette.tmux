@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 PID_FILE="/tmp/tmux-clockette.pid"
-PLUG_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+LOCAL_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 if [ ! -f $PID_FILE || ! ps -p "$(cat $PID_FILE )" >/dev/null ]; then
-    tmux run-shell -b "$PLUG_ROOT/scripts/tmux-clockette.sh"
+    tmux run-shell -b "$LOCAL_ROOT/scripts/tmux-clockette.sh"
   else
     tmux display -p "clockette is running@ \"Let it be.\" --The Beatles"
     exit 0
