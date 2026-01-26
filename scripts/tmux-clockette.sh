@@ -32,12 +32,12 @@ setClock()
   local hour=$1
   local minute=$2
   local day=$3
+  [[ "$hour" >= 10 ]] && local spacer=' ' || local spacer='' 
   local hex_base="0xF143F"
   local hex_now="$( printf '%X\n' "$(( hex_base + hour - 1 ))")"
   local icon="$( echo -e "\U$hex_now")"
-  dump ">> icon: ${icon}"
   tmux set -g @clock "$icon"
-  tmux set -g @clockette "#[fg=#{@orange_b}]#{@TriangleL}#[bg=#{@bg0},bold]#[reverse]#{@clock}%l#[blink]:#[noblink]%M%P #[bg=default]#[noreverse]#{@TriangleRInverse}"
+  tmux set -g @clockette "#[fg=#{@orange_b}]#{@TriangleL}#[bg=#{@bg0},bold]#[reverse]#{@clock}$spacer%l#[blink]:#[noblink]%M%P #[bg=default]#[noreverse]#{@TriangleRInverse}"
   tmux set -ag @clockette "#[fg=#{@green}]#{@TriangleL}#[bg=#{@bg0},bold]#[reverse]${day:0:2} %m|%e|%Y#[bg=default]#[noreverse]#{@HemiR}"
 }
 
