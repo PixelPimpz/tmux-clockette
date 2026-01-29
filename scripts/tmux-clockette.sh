@@ -32,7 +32,7 @@ setClock()
   local hour=$1
   local minute=$2
   local day=$3
-  [[ "$hour" >= 10 ]] && local spacer=' ' || local spacer='' 
+  (( "$hour" >= 10 )) && local spacer=' ' || local spacer='' 
   local hex_base="0xF143F"
   local hex_now="$( printf '%X\n' "$(( hex_base + hour - 1 ))")"
   local icon="$( echo -e "\U$hex_now")"
