@@ -9,7 +9,7 @@ trap fatal EXIT
 main() 
 {
   echo $$ > "$CLOCKETTE_PID"
-  tmux bind -r C-X dump "Stopping tmux-clockette." \; run-shell "kill $(cat $CLOCKETTE_PID )"
+  tmux bind C-x dump "Stopping tmux-clockette." \; run-shell "kill $(cat $CLOCKETTE_PID )"
   dump ">> clockette START. [CTRL-X] to stop"
 
   while true; do 
@@ -39,6 +39,7 @@ setClock()
   tmux set -g @clock "$icon"
   tmux set -g @clockette "#[fg=#{@orange_b}]#{@TriangleL}#[bg=#{@bg0},bold]#[reverse]#{@clock}$spacer%l#[blink]:#[noblink]%M%P #[bg=default]#[noreverse]#{@TriangleRInverse}"
   tmux set -ag @clockette "#[fg=#{@green}]#{@TriangleL}#[bg=#{@bg0},bold]#[reverse]${day:0:2} %m|%e|%Y#[bg=default]#[noreverse]#{@HemiR}"
+  tmux refresh-client
 }
 
 main  
